@@ -2,7 +2,7 @@ const shell = require('shelljs');
 const fs = require('fs-extra');
 const path = require('path');
 const _ = require('lodash');
-const ini = require('ini');
+const ConfigIniParser = require('config-ini-parser').ConfigIniParser;
 const debug = require('debug')('compile');
 
 const { switchToBranch } = require('../git/git');
@@ -105,6 +105,8 @@ const prepareFiles = async (data) => {
   }
 
   // platformio.ini file
+  const delimeter = '\n';
+  const parser = new ConfigIniParser(delimeter); //If don't assign the parameter delimiter then the default value \n will be used
   try {
     const platformioFileConetent = await fs.readFile(
       templatePlatformioIni,
@@ -114,16 +116,27 @@ const prepareFiles = async (data) => {
       .filter((e) => e.startsWith('buildflag_'))
       .reduce((accumulator, current) => `${accumulator} ${data[current]}`, '');
 
-    config = ini.parse(platformioFileConetent);
-    // config.user_defined.board_memory = `${data.coreVersion.mem_prefix}${data.boardVersion.mem_suffix}`;
-    config.user_defined.board_memory = data.memoryBuildFlag;
-    config.user_defined.board = data.boardVersion.board;
-    config.user_defined.f_cpu = data.boardSpeed;
-    config.user_defined.build_flags = buildFlags.trim();
-    config.core_active.platform = `\${${data.coreVersion.platform}.platform}`;
-    config.core_active.platform_packages = `\${${data.coreVersion.platform}.platform_packages}`;
-    config.core_active.build_flags = `\${${data.coreVersion.platform}.build_flags}`;
-    debug(ini.stringify(config));
+    parser.parse(platformioFileConetent);
+    parser.set('user_defined', 'board_memory', data.memoryBuildFlag);
+    parser.set('user_defined', 'board', data.boardVersion.board);
+    parser.set('user_defined', 'f_cpu', data.boardSpeed);
+    parser.set('user_defined', 'build_flags', buildFlags.trim());
+    parser.set(
+      'core_active',
+      'platform',
+      `\${${data.coreVersion.platform}.platform}`
+    );
+    parser.set(
+      'core_active',
+      'platform_packages',
+      `\${${data.coreVersion.platform}.platform_packages}`
+    );
+    parser.set(
+      'core_active',
+      'build_flags',
+      `\${${data.coreVersion.platform}.build_flags}`
+    );
+    debug(parser.stringify(delimeter));
   } catch (e) {
     throw new Error(
       `Cannot load content from platformio.ini template file\n${e}\n`
@@ -131,8 +144,8 @@ const prepareFiles = async (data) => {
   }
 
   try {
-    await fs.writeFileSync(userPlatformioIni, ini.stringify(config));
-    await fs.copyFileSync(tcSrcCoresIni, tcDestCoresIni);
+    fs.writeFileSync(userPlatformioIni, parser.stringify(delimeter));
+    fs.copyFileSync(tcSrcCoresIni, tcDestCoresIni);
   } catch (e) {
     throw new Error(`Cannot write new content to platformio.ini file\n${e}\n`);
   }
