@@ -1,7 +1,7 @@
 {
   "appBarLangFlag": "IT",
   "appBarLangTooltip": "Modifica lingua nelle impostazioni del browser",
-  
+
   "stepSourceTitle": "Codice sorgente Tasmota",
   "stepSourceDescRefresh": "Puoi aggiornare il codice sorgente alla versione più recente o selezionare 'Avanti' per andare allo step successivo",
   "stepSourceDescDownload": "Prima di andare allo step successivo devi scaricare il codice sorgente Tasmota",
@@ -23,6 +23,10 @@
   "stepWifiConfDNS": "Server DNS",
 
   "stepFeaturesTitle": "Selezione funzionalità",
+  "stepFeaturesMicrocontroller": "Choose microcontroller",
+  "stepFeaturesEsp8266Tooltip": "Most devices are based on esp8266: Sonoff, Shelly, etc..",
+  "stepFeaturesEsp32Tooltip": "This is new (experimental) in Tasmota. There are just few boards which are based on esp32 chip.",
+  "stepFeaturesMicrocontrollerHelper": "In most cases you should choose esp8266.",
   "stepFeaturesDesc": "Quali funzionalità vuoi includere nel firmware?",
   "stepFeaturesAGDesc": "Sensori aria/gas",
   "stepFeaturesAlexaDesc": "Amazon Alexa",
@@ -61,10 +65,12 @@
   "stepFeaturesZigbeeTooltip": "Abilita la comunicazione seriale con Zigbee CC2530 flashato con ZNP",
   "stepFeaturesI2CDesc": "Supporto I2C",
   "stepFeaturesSPIDesc": "Supporto SPI",
+  "stepFeaturesCamera": "Esp32 camera",
+  "stepFeaturesCameraTooltip": "Remember that you also have to choose proper board version and board speed.",
 
   "stepCustomParamsTitle": "Parametri personalizzati",
   "stepCustomParamsDesc": "Qui sotto puoi inserire i parametri personalizzati che verranno inclusi alla fine del file. Se non li conosci o non devi inserirli seleziona 'Avanti'.",
-  
+
   "stepVersionTitle": "Selezione versione e compilazione",
   "stepVersionDesc": "Seleziona la versione Tasmota e core Arduino. Scegli la lingua che vuoi usare e il tipo di hardware.",
   "stepVersionTasmota": "Versione Tasmota",

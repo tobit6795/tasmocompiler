@@ -9,6 +9,7 @@ const app = express();
 
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+let defaultEnv = '';
 
 const {
   isGitRepoAvailable,
@@ -96,13 +97,14 @@ app.post('/api/v1/compile', (req, res) => {
     debug(JSON.stringify(req.body, undefined, 2));
     res.send({ ok: true });
     compileCode(clientWSSocket, req.body);
+    defaultEnv = req.body.default_envs;
   }
 });
 
 app.get('/download/firmware.bin', (req, res) => {
   const firmwareFile = path.resolve(
     tasmotaRepo,
-    '.pioenvs/custom/firmware.bin'
+    `.pioenvs/${defaultEnv}/firmware.bin`
   );
   res.download(firmwareFile);
 });

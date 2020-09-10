@@ -45,6 +45,10 @@ const styles = (theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
+  actionsContainerRadio: {
+    margin: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit,
+  },
   versionContainer: {
     margin: theme.spacing.unit * 2,
     minWidth: 140,

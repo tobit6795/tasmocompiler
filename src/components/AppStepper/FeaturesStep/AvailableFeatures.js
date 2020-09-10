@@ -1,3 +1,5 @@
+// microcontroller is an index of microcontroller array (MicrocontrollerVersion.js)
+// microcontroller = -1 for all microcontrollers
 const availableFeatures = [
   {
     name: 'airsensors',
@@ -11,6 +13,7 @@ const availableFeatures = [
       'USE_NOVA_SDS',
       'USE_HPMA',
     ],
+    microcontroller: -1,
   },
   {
     name: 'alexa',
@@ -18,6 +21,7 @@ const availableFeatures = [
     show: true,
     description: 'stepFeaturesAlexaDesc',
     group: ['USE_EMULATION', 'USE_EMULATION_HUE', 'USE_EMULATION_WEMO'],
+    microcontroller: -1,
   },
   {
     name: 'USE_TASMOTA_SLAVE',
@@ -25,6 +29,7 @@ const availableFeatures = [
     show: true,
     description: 'stepFeaturesArduinoSlaveDesc',
     tooltip: 'stepFeaturesArduinoSlaveTooltip',
+    microcontroller: -1,
   },
   {
     name: 'displays',
@@ -56,6 +61,7 @@ const availableFeatures = [
       '#define MTX_ADDRESS6     0x76              // [DisplayAddress6] I2C address of sixth 8x8 matrix module\n' +
       '#define MTX_ADDRESS7     0x00              // [DisplayAddress7] I2C address of seventh 8x8 matrix module\n' +
       '#define MTX_ADDRESS8     0x00              // [DisplayAddress8] I2C address of eigth 8x8 matrix module\n',
+    microcontroller: -1,
   },
   {
     name: 'USE_ADC_VCC',
@@ -63,12 +69,14 @@ const availableFeatures = [
     show: true,
     description: 'stepFeaturesDispVccDesc',
     tooltip: 'stepFeaturesDispVccTooltip',
+    microcontroller: -1,
   },
   {
     name: 'USE_DOMOTICZ',
     value: false,
     show: true,
     description: 'stepFeaturesDomoticzDesc',
+    microcontroller: -1,
   },
   {
     name: 'energysensors',
@@ -88,12 +96,14 @@ const availableFeatures = [
       'USE_SOLAX_X1',
       'USE_LE01MR',
     ],
+    microcontroller: -1,
   },
   {
     name: 'USE_HOME_ASSISTANT',
     value: false,
     show: true,
     description: 'stepFeaturesHomeAssistantDesc',
+    microcontroller: -1,
   },
   {
     name: 'gpioexpanders',
@@ -108,12 +118,14 @@ const availableFeatures = [
     ],
     include: ['USE_I2C'],
     custom: '#define USE_MCP230xx_ADDR 0x20\n',
+    microcontroller: -1,
   },
   {
     name: 'USE_KNX',
     value: false,
     show: true,
     description: 'stepFeaturesKNXDesc',
+    microcontroller: -1,
   },
   {
     name: 'USE_IR_REMOTE',
@@ -123,6 +135,7 @@ const availableFeatures = [
     tooltip: 'stepFeaturesIRBasicTooltip',
     exclude: ['USE_IR_REMOTE_FULL'],
     buildflag: '-D_IR_ENABLE_DEFAULT_=false',
+    microcontroller: -1,
   },
   {
     name: 'USE_IR_REMOTE_FULL',
@@ -133,12 +146,14 @@ const availableFeatures = [
     exclude: ['USE_IR_REMOTE'],
     buildflag:
       '-U_IR_ENABLE_DEFAULT_ -DDECODE_PRONTO=false -DSEND_PRONTO=false',
+    microcontroller: -1,
   },
   {
     name: 'USE_DISCOVERY',
     value: false,
     show: true,
     description: 'stepFeaturesMDNSDesc',
+    microcontroller: -1,
   },
   {
     name: 'USE_MQTT_TLS',
@@ -146,6 +161,7 @@ const availableFeatures = [
     show: true,
     description: 'stepFeaturesMQTTTLSDesc',
     tooltip: 'stepFeaturesMQTTTLSTooltip',
+    microcontroller: -1,
   },
   {
     name: 'USE_RC_SWITCH',
@@ -153,6 +169,7 @@ const availableFeatures = [
     show: true,
     description: 'stepFeaturesRFTransceiverDesc',
     tooltip: 'stepFeaturesRFTransceiverTooltip',
+    microcontroller: -1,
   },
   {
     name: 'USE_RULES',
@@ -161,6 +178,7 @@ const availableFeatures = [
     description: 'stepFeaturesRulesDesc',
     tooltip: 'stepFeaturesRulesTooltip',
     exclude: ['USE_SCRIPT'],
+    microcontroller: -1,
   },
   {
     name: 'USE_SCRIPT',
@@ -169,24 +187,28 @@ const availableFeatures = [
     description: 'stepFeaturesScriptDesc',
     tooltip: 'stepFeaturesScriptTooltip',
     exclude: ['USE_RULES'],
+    microcontroller: -1,
   },
   {
     name: 'USE_TIMERS',
     value: true,
     show: true,
     description: 'stepFeaturesTimersDesc',
+    microcontroller: -1,
   },
   {
     name: 'USE_TUYA_MCU',
     value: false,
     show: true,
     description: 'stepFeaturesTuyaMCUDesc',
+    microcontroller: 0,
   },
   {
     name: 'USE_SR04',
     value: false,
     show: true,
     description: 'stepFeaturesUltrasonicDesc',
+    microcontroller: -1,
   },
   {
     name: 'USE_WEBSERVER',
@@ -194,12 +216,14 @@ const availableFeatures = [
     show: true,
     description: 'stepFeaturesWebInterfaceDesc',
     tooltip: 'stepFeaturesWebInterfaceTooltip',
+    microcontroller: -1,
   },
   {
     name: 'USE_WS2812',
     value: false,
     show: true,
     description: 'stepFeaturesWS2812Desc',
+    microcontroller: -1,
   },
   {
     name: 'USE_ZIGBEE',
@@ -207,18 +231,29 @@ const availableFeatures = [
     show: true,
     description: 'stepFeaturesZigbeeDesc',
     tooltip: 'stepFeaturesZigbeeTooltip',
+    microcontroller: -1,
   },
   {
     name: 'USE_I2C',
     value: false,
     show: false,
     description: 'stepFeaturesI2CDesc',
+    microcontroller: -1,
   },
   {
     name: 'USE_SPI',
     value: false,
     show: false,
     description: 'stepFeaturesSPIDesc',
+    microcontroller: -1,
+  },
+  {
+    name: 'camera',
+    value: false,
+    show: true,
+    description: 'stepFeaturesCamera',
+    tooltip: 'stepFeaturesCameraTooltip',
+    microcontroller: 1,
   },
 ];
 

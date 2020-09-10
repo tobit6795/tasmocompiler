@@ -136,6 +136,12 @@ const prepareFiles = async (data) => {
       'build_flags',
       `\${${data.coreVersion.platform}.build_flags}`
     );
+    parser.set(
+      'core_active',
+      'build_unflags',
+      `\${${data.coreVersion.platform}.build_unflags}`
+    );
+    parser.set('platformio', 'default_envs', data.default_envs);
     debug(parser.stringify(delimeter));
   } catch (e) {
     throw new Error(

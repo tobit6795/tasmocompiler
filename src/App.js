@@ -13,11 +13,16 @@ import FeaturesStep from './components/AppStepper/FeaturesStep/FeaturesStep';
 import CustomParametersStep from './components/AppStepper/CustomParametersStep';
 import MessageBox from './components/MessageBox/MessageBox';
 import DownloadLinks from './components/DownloadLinks/DownloadLinks';
-
+import microcontrollerVersion from './components/AppStepper/FeaturesStep/MicrocontrollerVersion';
 
 class App extends Component {
   constructor(props) {
     super(props);
+
+    const defaultMicrocontroller = microcontrollerVersion.findIndex(
+      (item) => item.default === true
+    );
+
     this.state = {
       activeStep: 0,
       tags: [],
@@ -26,6 +31,8 @@ class App extends Component {
       showDownloadLinks: false,
       compileMessages: '',
       customParams: '',
+      microcontroller: defaultMicrocontroller,
+      default_envs: microcontrollerVersion[defaultMicrocontroller].env,
     };
     this.handleNext = this.handleNext.bind(this);
     this.handleBack = this.handleBack.bind(this);
@@ -48,14 +55,14 @@ class App extends Component {
   }
 
   handleNext = (data) => {
-    this.setState(state => ({
+    this.setState((state) => ({
       activeStep: state.activeStep + 1,
       ...data,
     }));
   };
 
   handleBack = () => {
-    this.setState(state => ({
+    this.setState((state) => ({
       activeStep: state.activeStep - 1,
       compileMessages: '',
       showMessageBox: false,
@@ -66,43 +73,46 @@ class App extends Component {
   handleCompile = (data) => {
     const uri = '/api/v1/compile';
 
-    this.setState({
-      compiling: true,
-      showMessageBox: true,
-      compileMessages: '',
-      showDownloadLinks: false,
-      ...data,
-    }, () => {
-      const {
-        compiling,
-        showMessageBox,
-        message,
-        activeStep,
-        tags,
-        compileMessages,
-        ...postData
-      } = this.state;
+    this.setState(
+      {
+        compiling: true,
+        showMessageBox: true,
+        compileMessages: '',
+        showDownloadLinks: false,
+        ...data,
+      },
+      () => {
+        const {
+          compiling,
+          showMessageBox,
+          message,
+          activeStep,
+          tags,
+          compileMessages,
+          ...postData
+        } = this.state;
 
-      fetch(uri, {
-        method: 'POST',
-        body: JSON.stringify(postData),
-        headers: { 'Content-Type': 'application/json' },
-      })
-        .then(res => res.json())
-        .then((json) => {
-          if (!json.ok) {
-            this.setState((state) => {
-              let newMessages = state.compileMessages;
-              newMessages = `${newMessages}${json.message}`;
-              return { compileMessages: newMessages, compiling: false };
-            });
-          }
+        fetch(uri, {
+          method: 'POST',
+          body: JSON.stringify(postData),
+          headers: { 'Content-Type': 'application/json' },
         })
-        .catch((error) => {
-          this.setState({ compileMessages: error.message, compiling: false });
-        });
-    });
-  }
+          .then((res) => res.json())
+          .then((json) => {
+            if (!json.ok) {
+              this.setState((state) => {
+                let newMessages = state.compileMessages;
+                newMessages = `${newMessages}${json.message}`;
+                return { compileMessages: newMessages, compiling: false };
+              });
+            }
+          })
+          .catch((error) => {
+            this.setState({ compileMessages: error.message, compiling: false });
+          });
+      }
+    );
+  };
 
   render() {
     const { classes } = this.props;
@@ -114,6 +124,9 @@ class App extends Component {
       showMessageBox,
       showDownloadLinks,
       compileMessages,
+      microcontroller,
+      default_envs,
+      coreVersion,
       ...other
     } = this.state;
 
@@ -124,22 +137,36 @@ class App extends Component {
 
     return (
       <div className={classes.root}>
-        <TopAppBar {...this.props}/>
+        <TopAppBar {...this.props} />
         <Stepper activeStep={activeStep} orientation="vertical">
           <SourceStep {...this.props} nextHandler={this.handleNext} key={1} />
           <WifiStep {...this.props} {...bnHandlersProps} key={2} />
-          <FeaturesStep {...this.props} {...bnHandlersProps} key={3} />
-          <CustomParametersStep {...this.props} {...bnHandlersProps} pstate={other} key={4} />
+          <FeaturesStep
+            {...this.props}
+            {...bnHandlersProps}
+            microcontroller={microcontroller}
+            default_envs={default_envs}
+            key={3}
+          />
+          <CustomParametersStep
+            {...this.props}
+            {...bnHandlersProps}
+            pstate={other}
+            key={4}
+          />
           <VersionStep
             {...this.props}
             repoTags={tags}
             backHandler={this.handleBack}
             compileHandler={this.handleCompile}
             compiling={compiling}
+            microcontroller={microcontroller}
             key={5}
           />
         </Stepper>
-        {showMessageBox && <MessageBox {...this.props} compileMessages={compileMessages} />}
+        {showMessageBox && (
+          <MessageBox {...this.props} compileMessages={compileMessages} />
+        )}
         {showDownloadLinks && <DownloadLinks {...this.props} />}
       </div>
     );

@@ -15,6 +15,30 @@ import boardVersions from './Variables/BoardVersions';
 import boardSpeeds from './Variables/BoardSpeeds';
 import { FormattedMessage } from 'react-intl';
 
+function getDefaultCoreVersion(microcontroller) {
+  const index = coreVersions.findIndex(
+    (item) => item.microcontroller === microcontroller && item.default === true
+  );
+  return coreVersions[index].value;
+}
+
+function getDefaultBoardVersion(microcontroller) {
+  const index = boardVersions.findIndex(
+    (item) => item.microcontroller === microcontroller && item.default === true
+  );
+  return boardVersions[index].value;
+}
+
+function getDefaultBoardSpeed(microcontroller) {
+  const index = boardSpeeds.findIndex(
+    (item) =>
+      (item.microcontroller === microcontroller ||
+        item.microcontroller === -1) &&
+      item.default === true
+  );
+  return boardSpeeds[index].value;
+}
+
 class VersionStep extends Component {
   constructor(props) {
     super(props);
@@ -28,10 +52,10 @@ class VersionStep extends Component {
 
     this.state = {
       tasmotaVersion: 'development',
-      coreVersion: coreVersions[3].value,
+      coreVersion: getDefaultCoreVersion(this.props.microcontroller),
       MY_LANGUAGE: languages[languageIndex].value,
-      boardVersion: boardVersions[0].value,
-      boardSpeed: boardSpeeds[0].value,
+      boardVersion: getDefaultBoardVersion(this.props.microcontroller),
+      boardSpeed: getDefaultBoardSpeed(this.props.microcontroller),
       memoryBuildFlag: 'eagle.flash.1m.ld',
       message: '',
     };
@@ -39,7 +63,15 @@ class VersionStep extends Component {
     this.handleCompile = this.handleCompile.bind(this);
     this.handleBack = this.handleBack.bind(this);
   }
-
+  componentDidUpdate(prevProps) {
+    if (prevProps.microcontroller !== this.props.microcontroller) {
+      this.setState({
+        coreVersion: getDefaultCoreVersion(this.props.microcontroller),
+        boardVersion: getDefaultBoardVersion(this.props.microcontroller),
+        boardSpeed: getDefaultBoardSpeed(this.props.microcontroller),
+      });
+    }
+  }
   handleChange(event) {
     let memoryBuildFlag;
     const { boardVersion, coreVersion } = this.state;
@@ -111,6 +143,7 @@ class VersionStep extends Component {
       repoTags,
       compiling,
       compileHandler,
+      microcontroller,
       ...other
     } = this.props;
 
@@ -133,7 +166,9 @@ class VersionStep extends Component {
               classes={classes}
             />
             <VersionSelector
-              items={coreVersions}
+              items={coreVersions.filter(
+                (item) => item.microcontroller === microcontroller
+              )}
               name="coreVersion"
               value={coreVersion}
               label={<FormattedMessage id="stepVersionCore" />}
@@ -149,7 +184,9 @@ class VersionStep extends Component {
               classes={classes}
             />
             <VersionSelector
-              items={boardVersions}
+              items={boardVersions.filter(
+                (item) => item.microcontroller === microcontroller
+              )}
               name="boardVersion"
               value={boardVersion}
               label={<FormattedMessage id="stepVersionBoard" />}
@@ -157,7 +194,11 @@ class VersionStep extends Component {
               classes={classes}
             />
             <VersionSelector
-              items={boardSpeeds}
+              items={boardSpeeds.filter(
+                (item) =>
+                  item.microcontroller === microcontroller ||
+                  item.microcontroller === -1
+              )}
               name="boardSpeed"
               value={boardSpeed}
               label={<FormattedMessage id="stepVersionBoardSpeed" />}

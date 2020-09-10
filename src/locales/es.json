@@ -22,6 +22,10 @@
   "stepWifiConfDNS": "Servidor DNS",
 
   "stepFeaturesTitle": "Selecionar características",
+  "stepFeaturesMicrocontroller": "Choose microcontroller",
+  "stepFeaturesEsp8266Tooltip": "Most devices are based on esp8266: Sonoff, Shelly, etc..",
+  "stepFeaturesEsp32Tooltip": "This is new (experimental) in Tasmota. There are just few boards which are based on esp32 chip.",
+  "stepFeaturesMicrocontrollerHelper": "In most cases you should choose esp8266.",
   "stepFeaturesDesc": "¿Qué características quieres que se incluyan en el firmware personalizado?",
   "stepFeaturesAGDesc": "Sensores Aire/Gas",
   "stepFeaturesAlexaDesc": "Amazon Alexa",
@@ -60,6 +64,8 @@
   "stepFeaturesZigbeeTooltip": "Habilitar la comunicación en serie con Zigbee CC2530 flasheada con ZNP",
   "stepFeaturesI2CDesc": "Soporte a I2C",
   "stepFeaturesSPIDesc": "Soporte a SPI",
+  "stepFeaturesCamera": "Esp32 camera",
+  "stepFeaturesCameraTooltip": "Remember that you also have to choose proper board version and board speed.",
 
   "stepCustomParamsTitle": "Parametros personalizados",
   "stepCustomParamsDesc": "A continuación puede introducir los parámetros personalizados, que se incluirán al final del archivo {filename}. Si no sabes lo que es, sólo tienes que hacer clic en Siguiente.",

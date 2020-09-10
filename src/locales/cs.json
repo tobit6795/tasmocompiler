@@ -23,6 +23,10 @@
   "stepWifiConfDNS": "DNS server",
 
   "stepFeaturesTitle": "Výběr funkcí",
+  "stepFeaturesMicrocontroller": "Choose microcontroller",
+  "stepFeaturesEsp8266Tooltip": "Most devices are based on esp8266: Sonoff, Shelly, etc..",
+  "stepFeaturesEsp32Tooltip": "This is new (experimental) in Tasmota. There are just few boards which are based on esp32 chip.",
+  "stepFeaturesMicrocontrollerHelper": "In most cases you should choose esp8266.",
   "stepFeaturesDesc": "Jaké funkce chcete zahrnout do výsledného binárního FW?",
   "stepFeaturesAGDesc": "Senzory Vzduch/plyn",
   "stepFeaturesAlexaDesc": "Amazon Alexa",
@@ -61,6 +65,8 @@
   "stepFeaturesZigbeeTooltip": "Povolit sériovou komunikaci se Zigbee CC2530 s ZNP romkou",
   "stepFeaturesI2CDesc": "Podpora I2C",
   "stepFeaturesSPIDesc": "Podpora SPI",
+  "stepFeaturesCamera": "Esp32 camera",
+  "stepFeaturesCameraTooltip": "Remember that you also have to choose proper board version and board speed.",
 
   "stepCustomParamsTitle": "Vlastní parametry",
   "stepCustomParamsDesc": "Níže můžete zadat vlastní parametry, které budou zahrnuty na konec souboru {filename}. Pokud nevíte, o co se jedná, stačí kliknout na Další.",
