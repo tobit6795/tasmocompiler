@@ -253,6 +253,8 @@ const availableFeatures = [
     show: true,
     description: 'stepFeaturesCamera',
     tooltip: 'stepFeaturesCameraTooltip',
+    include: ['USE_I2C'],
+    group: ['USE_DISPLAY', 'USE_DISPLAY_SSD1306', 'HOW_SPLASH', 'USE_BMP'],
     microcontroller: 1,
   },
 ];
