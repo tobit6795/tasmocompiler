@@ -11,7 +11,7 @@ ADD package.json yarn.lock .yarnrc /tasmocompiler/
 RUN apt-get update && apt-get install -y python3 python3-pip git && \
   pip3 install --no-cache-dir platformio && \
   cd /tmp && \
-  git clone https://github.com/arendst/Tasmota.git && \
+  git clone https://github.com/gemu2015/Sonoff-Tasmota.git && \
   cd /tasmocompiler && \
   yarn install && \
   yarn global add nodemon && \
